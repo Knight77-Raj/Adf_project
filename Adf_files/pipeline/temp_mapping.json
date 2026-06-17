@@ -1,0 +1,76 @@
+{
+	"name": "temp_mapping",
+	"properties": {
+		"activities": [
+			{
+				"name": "OnpremFiles",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 2,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"value": "@json('{\n            \"type\": \"TabularTranslator\",\n            \"mappings\": [\n                {\n                    \"source\": {\n                        \"name\": \"flight_id\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    },\n                    \"sink\": {\n                        \"name\": \"flight_id\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    }\n                },\n                {\n                    \"source\": {\n                        \"name\": \"flight_number\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    },\n                    \"sink\": {\n                        \"name\": \"flight_number\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    }\n                },\n                {\n                    \"source\": {\n                        \"name\": \"departure_time\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    },\n                    \"sink\": {\n                        \"name\": \"departure_time\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    }\n                },\n                {\n                    \"source\": {\n                        \"name\": \"arrival_time\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    },\n                    \"sink\": {\n                        \"name\": \"arrival_time\",\n                        \"type\": \"String\",\n                        \"physicalType\": \"String\"\n                    }\n                }\n            ],\n            \"typeConversion\": true,\n            \"typeConversionSettings\": {\n                \"allowDataTruncation\": true,\n                \"treatBooleanAsNumber\": false\n            }\n        }')",
+						"type": "Expression"
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Ds_OnPrem_src_param",
+						"type": "DatasetReference",
+						"parameters": {
+							"p_file_name": {
+								"value": "DimFlight.csv",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Dsink_OnPrem_csv",
+						"type": "DatasetReference",
+						"parameters": {
+							"p_filename": {
+								"value": "DimFlight.csv",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-06-08T10:31:12Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

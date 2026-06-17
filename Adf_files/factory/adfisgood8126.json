@@ -1,0 +1,15 @@
+{
+	"name": "adfisgood8126",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "edc553db-2a05-4e66-82c9-413a33ba9c56",
+		"tenantId": "82850e32-3828-4398-a36c-65dbd36d5ef6"
+	}
+}
